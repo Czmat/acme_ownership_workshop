@@ -1,0 +1,58 @@
+body {
+  font-family: verdana;
+  margin: 0;
+}
+
+.forms,.lists {
+  display: flex;
+}
+
+.forms > *,.lists > * {
+  border: solid 1px black;
+  flex: 1;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+
+
+h2 {
+  text-transform: uppercase;
+}
+
+li {
+}
+
+li > * {
+  margin: 1rem;
+}
+
+h1 {
+  background-color: teal;
+  padding: 1rem;
+  color: linen;
+  text-align: center;
+}
+select, input, button {
+  height: 3rem;
+  font-size: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > * {
+  margin: 1rem;
+}
+
+section {
+}

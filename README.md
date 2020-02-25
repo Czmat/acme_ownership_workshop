@@ -1,0 +1,19 @@
+- npm i
+
+- The majority of the backend is missing from this application
+- using express, pg build out your backend so that the front end functionality works
+- You'll need to set up 3 tables
+  - users
+    - id UUID
+    - name unique and required
+  - things
+    - id UUID
+    - name unique and required
+  - user_things
+    - id UUID
+    - userId UUID references users table
+    - thingId UUID references things table
+- You're front end will be expecting to have routes for the following
+  - GET, DELETE, POST to /api/users
+  - GET, DELETE, POST to /api/things
+  - GET, DELETE, POST to /api/user_things
