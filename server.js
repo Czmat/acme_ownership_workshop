@@ -44,7 +44,7 @@ app.get('/api/user_things', (req, res, next) => {
 });
 
 app.post('/api/users', (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   db.createUser(req.body)
     .then(response => {
       res.send(response);
@@ -53,7 +53,7 @@ app.post('/api/users', (req, res, next) => {
 });
 
 app.post('/api/user_things', (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   db.createUserThings(req.body)
     .then(response => {
       res.send(response);
@@ -62,7 +62,7 @@ app.post('/api/user_things', (req, res, next) => {
 });
 
 app.post('/api/things', (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   db.createThing(req.body)
     .then(response => {
       res.send(response);

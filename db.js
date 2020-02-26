@@ -24,7 +24,9 @@ const sync = async () => {
   CREATE TABLE user_things(
         id UUID PRIMARY KEY default uuid_generate_v4(),
         "userId" UUID REFERENCES users(id),
-        "thingId" UUID REFERENCES things(id)
+        "thingId" UUID REFERENCES things(id),
+        --bonus,
+        "isFavorite" BOOLEAN default false
         );
   CREATE UNIQUE INDEX ON user_things("userId", "thingId");
   `;
@@ -43,7 +45,7 @@ const sync = async () => {
   ]);
 };
 
-//Additional methods here for reading, creating, destroying
+//create functions
 const createUser = async ({ name }) => {
   return (
     await client.query('INSERT INTO users(name) VALUES ($1) returning * ', [
@@ -60,15 +62,37 @@ const createThing = async ({ name }) => {
   ).rows[0];
 };
 
-const createUserThings = async ({ thingId, userId }) => {
-  return (
+//bonus
+const favoriteCount = async (userId, isFavorite) => {
+  const userCount = (
     await client.query(
-      'INSERT INTO user_things( "thingId", "userId") VALUES ($1, $2) returning *',
-      [thingId, userId]
+      'SELECT "userId" FROM user_things INNER JOIN users ON users.id = $1  WHERE user_things."isFavorite" = true',
+      [userId]
     )
-  ).rows[0];
+  ).rows;
+
+  if (isFavorite === 'true') {
+    return userCount.filter(user => userId === user.userId).length;
+  } else {
+    return 0;
+  }
 };
 
+const createUserThings = async ({ thingId, userId, isFavorite }) => {
+  if ((await favoriteCount(userId, isFavorite)) < 1) {
+    const response = (
+      await client.query(
+        'INSERT INTO user_things( "thingId", "userId", "isFavorite") VALUES ($1, $2, $3) returning *',
+        [thingId, userId, isFavorite || null]
+      )
+    ).rows[0];
+    return response;
+  } else {
+    throw new Error('Cant add favorite, You can have only one favorite');
+  }
+};
+
+//read functions
 const readUsers = async () => {
   return (await client.query('SELECT * FROM users')).rows;
 };
@@ -81,6 +105,7 @@ const readUserThings = async () => {
   return (await client.query('SELECT * FROM user_things')).rows;
 };
 
+//delete functions
 const deleteUser = async id => {
   const SQL = 'DELETE FROM users WHERE id=$1';
   await client.query(SQL, [id]);

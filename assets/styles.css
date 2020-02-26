@@ -3,11 +3,13 @@ body {
   margin: 0;
 }
 
-.forms,.lists {
+.forms,
+.lists {
   display: flex;
 }
 
-.forms > *,.lists > * {
+.forms > *,
+.lists > * {
   border: solid 1px black;
   flex: 1;
   margin: 1rem;
@@ -20,8 +22,6 @@ body {
   margin: 1rem;
   padding: 1rem;
 }
-
-
 
 h2 {
   text-transform: uppercase;
@@ -40,7 +40,9 @@ h1 {
   color: linen;
   text-align: center;
 }
-select, input, button {
+select,
+input,
+button {
   height: 3rem;
   font-size: 1.5rem;
 }
@@ -52,6 +54,10 @@ form {
 
 form > * {
   margin: 1rem;
+}
+
+.isFavorite {
+  font-weight: bold;
 }
 
 section {

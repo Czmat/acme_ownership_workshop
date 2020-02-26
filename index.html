@@ -21,9 +21,10 @@
       const UserThingForm = ({ things, users, createUserThing }) => {
         const [thingId, setThingId] = useState('');
         const [userId, setUserId] = useState('');
+        const [isFavorite, setIsFavorite] = useState(false);
         const onSubmit = ev => {
           ev.preventDefault();
-          createUserThing({ thingId, userId });
+          createUserThing({ thingId, userId, isFavorite });
         };
         return (
           <section>
@@ -41,6 +42,15 @@
                     </option>
                   );
                 })}
+              </select>
+              <select
+                value={isFavorite}
+                onChange={ev => setIsFavorite(ev.target.value)}
+              >
+                <option value="">-- choose if Favorite --</option>
+
+                <option value={true}>Thing is Favorite</option>
+                <option value={false}>Thing is Not Favorite</option>
               </select>
               <select
                 value={userId}
@@ -158,7 +168,12 @@
                         .filter(userThing => userThing.userId === user.id)
                         .map(userThing => {
                           return (
-                            <li key={userThing.id}>
+                            <li
+                              key={userThing.id}
+                              className={
+                                userThing.isFavorite ? 'isFavorite' : ''
+                              }
+                            >
                               {
                                 things.find(
                                   thing => thing.id === userThing.thingId
